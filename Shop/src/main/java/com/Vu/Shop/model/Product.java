@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 
 public class Product {
@@ -40,4 +40,13 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
+
+	public Product(String name, String brand, BigDecimal price, int inventory, String description, Category category) {
+		this.name = name;
+		this.brand = brand;
+		this.price = price;
+		this.inventory = inventory;
+		this.description = description;
+		this.category = category;
+	}
 }
