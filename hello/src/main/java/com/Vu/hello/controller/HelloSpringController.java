@@ -9,6 +9,8 @@ public class HelloSpringController {
 	String sayHello() {
 		return "Hello time, again";
 	}
-	
-	
+	@GetMapping("/vu")
+	String lover() {
+		return "Nguyen Tuong Vy";
+	}
 }
