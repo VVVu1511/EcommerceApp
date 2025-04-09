@@ -8,8 +8,7 @@ import com.example.identityservice.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String>{
-	
-	
+	boolean existsByUsername(String username);
 }
 
 
