@@ -62,7 +62,8 @@
 	        <groupId>org.mapstruct</groupId>
 	        <artifactId>mapstruct</artifactId>
 	        <version>1.5.5.Final</version> <!-- hoặc version mới hơn -->
-    </dependency>
+    	</dependency>
+    	
     </dependencies>
 
     <build>
