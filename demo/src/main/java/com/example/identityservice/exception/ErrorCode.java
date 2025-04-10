@@ -7,7 +7,6 @@ public enum ErrorCode {
 	USERNAME_INVALID(1003, "Username must be at least 3 characters"),
 	PASSWORD_INVALID(1004, "Password must be at least 8 characters");
 	
-	
 	private int code;
 	private String message;
 	
@@ -21,5 +20,4 @@ public enum ErrorCode {
 	public String getMessage() {
 		return message;
 	}
-	
 }
