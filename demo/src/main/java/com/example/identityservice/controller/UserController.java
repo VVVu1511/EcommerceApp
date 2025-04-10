@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+
+import com.example.identityservice.dto.request.ApiResponse;
 import com.example.identityservice.dto.request.UserCreationRequest;
 import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.entity.User;
@@ -25,8 +27,12 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping
-	User createUser(@RequestBody @Valid UserCreationRequest request) {
-		return userService.createUser(request);
+	ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
+		ApiResponse<User> apiResponse = new ApiResponse<>();
+		
+		apiResponse.setResult(userService.createUser(request));
+		
+		return apiResponse;
 	}
 	
 	@GetMapping
