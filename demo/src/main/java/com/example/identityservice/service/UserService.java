@@ -3,6 +3,8 @@ package com.example.identityservice.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.identityservice.dto.request.UserCreationRequest;
 import com.example.identityservice.dto.request.UserUpdateRequest;
@@ -30,6 +32,9 @@ public class UserService {
 		}
 		
 		User user = userMapper.toUser(request);
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+		user.setPassword(passwordEncoder.encode(request.getPassword()));
+		
 		
 		return userRepository.save(user);
 	}
@@ -39,6 +44,7 @@ public class UserService {
 				.orElseThrow(() -> new RuntimeException("User not found!"));
 		
 		userMapper.updateUser(user, request);
+		userRepository.save(user);
 		
 		return userMapper.toUserResponse(user);
 	}
@@ -53,6 +59,7 @@ public class UserService {
 	
 	public UserResponse getUser(String id) {
 		return userMapper.toUserResponse(userRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("User not found!")));
+				.orElseThrow(() -> new RuntimeException("User not found!"))
+				);
 	}
 }
