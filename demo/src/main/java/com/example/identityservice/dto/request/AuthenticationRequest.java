@@ -1,6 +1,6 @@
 package com.example.identityservice.dto.request;
 
-import java.time.LocalDate;
+
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,5 +17,4 @@ import lombok.experimental.FieldDefaults;
 public class AuthenticationRequest {
 	String username;
 	String password;
-	
 }

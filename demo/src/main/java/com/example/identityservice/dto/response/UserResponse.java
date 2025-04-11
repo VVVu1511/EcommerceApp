@@ -2,8 +2,6 @@ package com.example.identityservice.dto.response;
 
 import java.time.LocalDate;
 
-import com.example.identityservice.dto.request.UserCreationRequest;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,16 +9,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
-	private String id;
-	private String username;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private LocalDate dob;
+	String id;
+	String username;
+	String password;
+	String firstName;
+	String lastName;
+	LocalDate dob;
 }

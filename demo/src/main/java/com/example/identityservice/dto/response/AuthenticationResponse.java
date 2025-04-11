@@ -1,8 +1,5 @@
 package com.example.identityservice.dto.response;
 
-import java.time.LocalDate;
-
-import com.example.identityservice.dto.request.UserCreationRequest;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
