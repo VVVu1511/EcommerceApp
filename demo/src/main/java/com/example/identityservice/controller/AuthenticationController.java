@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.identityservice.dto.request.ApiResponse;
 import com.example.identityservice.dto.request.AuthenticationRequest;
+import com.example.identityservice.dto.request.IntrospectRequest;
 import com.example.identityservice.dto.response.AuthenticationResponse;
 import com.example.identityservice.service.AuthenticationService;
 
@@ -25,12 +26,19 @@ public class AuthenticationController {
 	
 	@PostMapping("/log-in")
 	ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
-		boolean result = authenticationService.authenticate(request);
+		AuthenticationResponse result = authenticationService.authenticate(request);
 		
 		return ApiResponse.<AuthenticationResponse>builder()
-		        .result(AuthenticationResponse.builder()
-		                .authenticated(result)
-		                .build())
+		        .result(result)
+		        .build();
+	}
+	
+	@PostMapping("/introspect")
+	ApiResponse<AuthenticationResponse> authenticate(@RequestBody IntrospectRequest request){
+		IntrospectRequest result = authenticationService.authenticate(request);
+		
+		return ApiResponse.<IntrospectRequest>builder()
+		        .result(result)
 		        .build();
 	}
 }
