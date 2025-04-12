@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import org.hibernate.usertype.LoggableUserType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.sun.org.apache.xml.internal.security.signature.VerifiedReference;
 
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -46,7 +45,8 @@ public class AuthenticationService {
 	UserRepository userRepository;
 	
 	@NonFinal
-	protected static final String SIGNER_KEY = "/X80Trc/zPkE38VMU0U2SyEVUuMfnLcGyDY2Y2/UdGxU+dn4/iDAr3lfUW6t9cNM\r\n";
+	@Value("${jwt.signerKey}")
+	protected String SIGNER_KEY;
 			
 	
 	public IntrospectResponse introspect(IntrospectRequest request)
