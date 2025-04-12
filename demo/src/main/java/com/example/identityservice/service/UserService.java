@@ -1,5 +1,6 @@
 package com.example.identityservice.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.example.identityservice.dto.request.UserCreationRequest;
 import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.dto.response.UserResponse;
 import com.example.identityservice.entity.User;
+import com.example.identityservice.enums.Role;
 import com.example.identityservice.exception.AppException;
 import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.mapper.UserMapper;
@@ -26,7 +28,7 @@ public class UserService {
 	UserRepository userRepository;
 	UserMapper userMapper;
 	
-	public User createUser(UserCreationRequest request) {
+	public UserResponse createUser(UserCreationRequest request) {
 		if(userRepository.existsByUsername(request.getUsername())) {
 			throw new AppException(ErrorCode.USER_EXIST);
 		}
@@ -35,8 +37,12 @@ public class UserService {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		
+		HashSet<String> roles = new HashSet<>();
+		roles.add(Role.USER.name());
 		
-		return userRepository.save(user);
+		user.setRoles(roles);
+		
+		return userMapper.toUserResponse(userRepository.save(user));
 	}
 	
 	public UserResponse updateUser(String userId,UserUpdateRequest request) {
