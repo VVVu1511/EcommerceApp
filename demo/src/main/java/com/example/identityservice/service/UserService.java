@@ -3,6 +3,7 @@ package com.example.identityservice.service;
 import java.util.HashSet;
 import java.util.List;
 
+import org.hibernate.transform.ToListResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,8 +61,8 @@ public class UserService {
 		userRepository.deleteById(userId);
 	}
 	
-	public List<User> getUser(){
-		return userRepository.findAll();
+	public List<UserResponse> getUsers(){
+		return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
 	}
 	
 	public UserResponse getUser(String id) {
