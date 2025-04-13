@@ -17,7 +17,11 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.example.identityservice.enums.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -35,16 +39,34 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     	httpSecurity.authorizeHttpRequests(request -> 
-    				request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINT).permitAll()    					
-    					.anyRequest().authenticated());
+    				request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINT).permitAll()
+    					.requestMatchers(HttpMethod.GET, "/users")
+    					.hasRole(Role.ADMIN.name())
+    				.anyRequest().authenticated())
+    	;
     	httpSecurity.oauth2ResourceServer(oauth2 -> 
-    		oauth2.jwt(JwtConfigurer -> JwtConfigurer.decoder(jwtDecoder()))
+    		oauth2.jwt(JwtConfigurer -> 
+    				JwtConfigurer.decoder(jwtDecoder())
+    				.jwtAuthenticationConverter(jwtAuthenticationConverter()))    				
     	);
     	
     	httpSecurity.csrf(AbstractHttpConfigurer::disable);
     	
     	return httpSecurity.build();
     }
+	
+	
+	@Bean
+	JwtAuthenticationConverter jwtAuthenticationConverter() {
+		JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter(); 
+		jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+		
+		JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+		
+		return jwtAuthenticationConverter;
+	}
+	
 	
 	@Bean
 	JwtDecoder jwtDecoder() {
