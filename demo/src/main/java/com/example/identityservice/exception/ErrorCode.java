@@ -2,6 +2,7 @@ package com.example.identityservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import lombok.Getter;
 
@@ -13,8 +14,9 @@ public enum ErrorCode {
 	USER_EXIST(1002,"User exists", HttpStatus.BAD_REQUEST),
 	USERNAME_INVALID(1003, "Username must be at least 3 characters", HttpStatus.BAD_REQUEST),
 	PASSWORD_INVALID(1004, "Password must be at least 8 characters", HttpStatus.BAD_REQUEST),
-	USER_NOT_EXIST(1005, "User not exist", HttpStatus.BAD_REQUEST),
-	UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.BAD_REQUEST);
+	USER_NOT_EXIST(1005, "User not exist", HttpStatus.NOT_FOUND),
+	UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
+	UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN);
 	
 	private int code;
 	private String message;
