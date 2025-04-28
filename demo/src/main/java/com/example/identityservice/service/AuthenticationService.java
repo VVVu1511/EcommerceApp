@@ -84,7 +84,6 @@ public class AuthenticationService {
 		
 		String tokenString = generateToken(user);
 		
-		
 		return AuthenticationResponse.builder()
 				.token(tokenString)
 				.authenticated(true)
