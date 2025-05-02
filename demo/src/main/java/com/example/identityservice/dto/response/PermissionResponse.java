@@ -1,9 +1,5 @@
 package com.example.identityservice.dto.response;
 
-import java.time.LocalDate;
-import java.util.Set;
-
-import com.example.identityservice.entity.Role;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,17 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse {
-	String id;
-	String username;
-	String firstName;
-	String lastName;
-	LocalDate dob;
-	Set<Role> roles;
+@Data
+public class PermissionResponse {
+	String name;
+	String description;
 }
