@@ -1,25 +1,22 @@
-package com.example.identityservice.entity;
+package com.example.identityservice.dto.request;
 
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Permission {
-	@Id
+@Data
+
+public class RoleRequest {
 	String name;
 	String description;
+	Set<String> permissions;
 }
