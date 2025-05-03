@@ -14,10 +14,11 @@ import com.example.identityservice.dto.request.UserCreationRequest;
 import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.dto.response.UserResponse;
 import com.example.identityservice.entity.User;
-import com.example.identityservice.enums.Role;
+import com.example.identityservice.entity.Role;
 import com.example.identityservice.exception.AppException;
 import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.mapper.UserMapper;
+import com.example.identityservice.repository.RoleRepository;
 import com.example.identityservice.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService {
 	UserRepository userRepository;
+	RoleRepository roleRepository;
 	UserMapper userMapper;
 	PasswordEncoder passwordEncoder;
 	
@@ -42,7 +44,7 @@ public class UserService {
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		
 		HashSet<String> roles = new HashSet<>();
-		roles.add(Role.USER.name());
+//		roles.add(Role.USER.name());
 		
 		
 //		user.setRoles(roles);
@@ -56,6 +58,10 @@ public class UserService {
 		
 		userMapper.updateUser(user, request);
 		userRepository.save(user);
+		user.setPassword(passwordEncoder.encode(request.getPassword()));
+		
+		List<Role> roles = roleRepository.findAllById(request.getRoles());
+		user.setRoles(new HashSet<>(roles));
 		
 		return userMapper.toUserResponse(user);
 	}

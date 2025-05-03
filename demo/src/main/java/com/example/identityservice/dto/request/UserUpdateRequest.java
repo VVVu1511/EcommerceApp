@@ -1,6 +1,9 @@
 package com.example.identityservice.dto.request;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.example.identityservice.entity.Role;
 
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -18,8 +21,8 @@ import lombok.experimental.FieldDefaults;
 public class UserUpdateRequest {
 	@Size(min=8, message = "Password must be at least 8 characters")
 	String password;
-	
 	String firstName;
 	String lastName;
 	LocalDate dob;
+	List<String> roles;
 }
