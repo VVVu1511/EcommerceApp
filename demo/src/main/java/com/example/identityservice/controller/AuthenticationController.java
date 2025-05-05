@@ -1,6 +1,7 @@
 package com.example.identityservice.controller;
 
 
+import java.lang.System.Logger;
 import java.text.ParseException;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.identityservice.dto.request.ApiResponse;
 import com.example.identityservice.dto.request.AuthenticationRequest;
 import com.example.identityservice.dto.request.IntrospectRequest;
+import com.example.identityservice.dto.request.LogoutRequest;
+import com.example.identityservice.dto.request.RefreshRequest;
 import com.example.identityservice.dto.response.AuthenticationResponse;
 import com.example.identityservice.dto.response.IntrospectResponse;
 import com.example.identityservice.service.AuthenticationService;
@@ -43,6 +46,25 @@ public class AuthenticationController {
 		IntrospectResponse result = authenticationService.introspect(request);
 		
 		return ApiResponse.<IntrospectResponse>builder()
+		        .result(result)
+		        .build();
+	}
+	
+	@PostMapping("/logout")
+	ApiResponse<Void> logout(@RequestBody LogoutRequest request)
+		throws ParseException, JOSEException{
+		authenticationService.logout(request);
+		
+		return ApiResponse.<Void>builder()
+		        .build();
+	}
+	
+	@PostMapping("/refresh")
+	ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request)
+	 throws ParseException, JOSEException{
+		AuthenticationResponse result = authenticationService.refreshToken(request);
+		
+		return ApiResponse.<AuthenticationResponse>builder()
 		        .result(result)
 		        .build();
 	}
