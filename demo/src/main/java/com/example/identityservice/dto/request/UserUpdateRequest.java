@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.identityservice.entity.Role;
+import com.example.identityservice.validator.DobConstraints;
 
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -23,6 +24,8 @@ public class UserUpdateRequest {
 	String password;
 	String firstName;
 	String lastName;
+	
+	@DobConstraints(min = 18, message = "INVALID_DOB")
 	LocalDate dob;
 	List<String> roles;
 }

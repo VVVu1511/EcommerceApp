@@ -14,10 +14,12 @@ import jakarta.validation.Payload;
 
 @Target({ FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = { })
+@Constraint(validatedBy = { DobValidator.class})
 public @interface DobConstraints {
-	String message() default "{jakarta.validation.constraints.Size.message}";
+	String message() default "Invalid date of birth";
 
+	int min();
+	
 	Class<?>[] groups() default { };
 
 	Class<? extends Payload>[] payload() default { };
