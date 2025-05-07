@@ -47,7 +47,6 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -174,8 +173,7 @@ public class AuthenticationService {
 	private String generateToken(User user) {
 		JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 		
-		
-		
+		 
 		JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
 				.subject(user.getUsername())
 				.issuer("Vu.com")
